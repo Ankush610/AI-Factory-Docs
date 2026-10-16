@@ -1,0 +1,75 @@
+site_name: AI-Factory
+site_description: User and admin documentation for the AI-Factory platform (Rudra)
+site_url: https://ankush610.github.io/AI-Factory-Docs/
+repo_url: https://github.com/Ankush610/AI-Factory-Docs
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle: {icon: material/weather-night, name: Dark mode}
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle: {icon: material/weather-sunny, name: Light mode}
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+    - content.action.edit
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc: {permalink: true}
+  - pymdownx.details
+  - pymdownx.tabbed: {alternate_style: true}
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Home: index.md
+  - User guide:
+      - user/index.md
+      - Write code: user/coding.md
+      - Train a model: user/training.md
+      - Track runs: user/tracking.md
+      - Deploy a model: user/deploy.md
+      - Call and share a model: user/call-api.md
+      - Problems and fixes: user/faq.md
+  - Admin guide:
+      - Install: admin/index.md
+      - Everyday tasks: admin/daily.md
+      - Cluster monitor: admin/cluster-monitor.md
+      - Alerts runbook: https://github.com/Ankush610/OOD-Install/blob/main/9-monitoring/README.md#alerts-what-to-do
+      - Troubleshooting: admin/troubleshooting.md
+  - How it works:
+      - how-it-works/index.md
+      - Cluster architecture: how-it-works/01-cluster-architecture.md
+      - End-to-end flow: how-it-works/02-end-to-end-flow.md
+      - Users and login: how-it-works/03-users-and-login.md
+      - Web portal (OOD): how-it-works/04-web-portal-ood.md
+      - Slurm and Kubernetes: how-it-works/05-slurm-and-kubernetes.md
+      - Containers and registry: how-it-works/06-containers-and-registry.md
+      - VS Code and Jupyter: how-it-works/07-vscode-and-jupyter.md
+      - MLflow: how-it-works/08-mlflow.md
+      - Model Hub: how-it-works/09-model-hub.md
+      - Gateway and API keys: how-it-works/10-gateway-and-api-keys.md
+      - Security and isolation: how-it-works/11-security-and-isolation.md
+  - Glossary: glossary.md
