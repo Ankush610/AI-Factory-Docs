@@ -47,17 +47,19 @@ flowchart LR
 
   | Section | Cards |
   |---|---|
+  | **Admin** (admin account only, on top) | Admin Panel, Cluster monitor |
   | **Develop** | Jupyter, VS Code, Shell |
   | **Track & Deploy** | MLflow, Model Hub |
   | **Data & Cluster** | Files |
-  | **Admin** | AI Stack Admin (admin account only) |
 
   Each card has the tool's icon, a one-line note on what it does, and **Open**, which goes to the same page as the
   top bar. A card shows only if the user may open that app. Tools hidden from the top bar are not on the home page either.
 - A navy top bar with the C-DAC logo and three menus only:
   - **Files** — their home folder.
   - **Clusters** — a shell in the browser, and system status.
-  - **Interactive Apps** — Model Hub, VS Code, MLflow (shared), Jupyter; and **Admin** for the admin account.
+  - **Interactive Apps** — Model Hub, VS Code, MLflow (shared), Jupyter. The admin account sees **Admin** and
+    **Cluster monitor** on top, then Jupyter and VS Code: like its home page, no MLflow or Model Hub (they log in
+    through LDAP, and the admin account isn't in LDAP).
 - Our own app pages (VS Code, Jupyter, MLflow, Model Hub) have the same top bar, so the whole thing feels like one product.
 - Footer: "© 2026 C-DAC India — Government of India".
 

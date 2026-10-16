@@ -25,8 +25,8 @@ GPUs, certificates). Each one has:
   available. A red ring = faulty (memory errors, needs a reset, slowed down). A dashed red square = missing (Slurm
   expects it, the node doesn't see it).
 - **⚠ next to a node:** a faulty or missing GPU, or a core service not running there.
-- **Click a node** for its side panel: what needs attention (with How to fix), CPU and memory reserved vs in use,
-  each GPU and its health, the last hour, and who runs what there.
+- **Click a node** for its popup (full screen on phones): what needs attention (with How to fix), CPU and memory reserved vs in use,
+  each GPU with meters for in use and memory plus its health, the last hour, and who runs what there.
 
 ## Services tab
 
