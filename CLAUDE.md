@@ -178,8 +178,9 @@ paths are relative to the OOD-Install root. Small items go in a "Smaller items" 
   `#keycloak-with-an-empty-mlflow_prefix-breaks-open-mlflow`. **Renaming a heading breaks links to it**:
   `grep -rn "#old-anchor" docs/` and fix them.
 - Link OOD-Install files and folders with full GitHub URLs (`https://github.com/Ankush610/OOD-Install/tree/main/…`).
-- `RUNBOOK_URL` in OOD-Install points at its own `9-monitoring/README.md#<alertname>`; the nav's "Alerts runbook"
-  links there too. Don't break that unless OOD-Install changes `RUNBOOK_URL`.
+- `RUNBOOK_URL` in OOD-Install points at `reference/monitoring/` on this site: the Cluster monitor links
+  `#<alertname in lower case>` and `#alerts-what-to-do`. Keep those `<a id>` anchors in `reference/monitoring.md`;
+  a new alert in `rules.yml`/`node-alerts.yml` needs a row with its anchor there.
 
 ## Checklist before every commit
 

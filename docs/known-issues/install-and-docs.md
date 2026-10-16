@@ -91,8 +91,8 @@ read this page: [Known issues](index.md#how-to-read-these-pages).
 
 ## Certificate renewal isn't really documented
 
-- **Type:** Docs · **Confidence:** Confirmed · **Where:** `9-monitoring/README.md:122`
-- **What happens:** the alert runbook says to renew certificates by rerunning the install scripts. That doesn't work
+- **Type:** Docs · **Confidence:** Confirmed · **Where:** [alerts runbook](../reference/monitoring.md#certificateexpiressoon)
+- **What happens:** the obvious fix, rerunning the install scripts, doesn't renew the certificate
   for two of the three:
 
 | Certificate | Rerun renews it? | What works |

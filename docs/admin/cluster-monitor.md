@@ -13,7 +13,7 @@ At the top of both tabs: every alert that is firing now, the most harmful first 
 GPUs, certificates). Each one has:
 
 - **Show**: opens the node, or the Services tab.
-- **How to fix**: opens that alert's row in [Alerts: what to do](https://github.com/Ankush610/OOD-Install/blob/main/9-monitoring/README.md#alerts-what-to-do).
+- **How to fix**: opens that alert's row in the [Alerts runbook](../reference/monitoring.md#alerts).
 
 ## Nodes tab
 
@@ -45,10 +45,7 @@ The tab, the filters and the open node are in the address, so you can bookmark o
 
 ## Alerts
 
-Every alert, what it means and what to do, is in one table:
-[Alerts: what to do](https://github.com/Ankush610/OOD-Install/blob/main/9-monitoring/README.md#alerts-what-to-do).
-The Cluster monitor's **How to fix** links go there. Change where they point with `RUNBOOK_URL` in `site.conf`.
-
-Every metric, named query and alert is listed in the [Monitoring reference](../reference/monitoring.md).
+Every alert, what it means and what to do, is in the [Monitoring reference](../reference/monitoring.md#alerts).
+The Cluster monitor's **How to fix** links go there (`RUNBOOK_URL` in `site.conf`).
 
 Email alerts are planned, not built yet ([known issue](../known-issues/monitoring.md#no-notifications-and-no-watch-on-the-watcher)).

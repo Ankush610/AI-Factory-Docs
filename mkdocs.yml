@@ -68,7 +68,7 @@ nav:
           - 9 · Monitoring: admin/install/monitoring.md
       - Everyday tasks: admin/daily.md
       - Cluster monitor: admin/cluster-monitor.md
-      - Alerts runbook: https://github.com/Ankush610/OOD-Install/blob/main/9-monitoring/README.md#alerts-what-to-do
+      - Alerts runbook: reference/monitoring.md
       - Troubleshooting: admin/troubleshooting.md
   - How it works:
       - how-it-works/index.md

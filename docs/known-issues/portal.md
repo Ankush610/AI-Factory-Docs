@@ -29,8 +29,8 @@ Issues in [`2-ood`](https://github.com/Ankush610/OOD-Install/tree/main/2-ood). H
 
 ## Certificate renewal isn't documented
 
-- **Type:** Docs · **Confidence:** Confirmed · **Where:** `2-ood/setup-ood.sh:53`; `9-monitoring/README.md:122`
-- **What happens:** the monitoring runbook says to renew the portal certificate by rerunning `setup-ood.sh`. The
+- **Type:** Docs · **Confidence:** Confirmed · **Where:** `2-ood/setup-ood.sh:53`
+- **What happens:** rerunning `setup-ood.sh` doesn't renew the portal certificate: the
   script never replaces an existing certificate, so nothing changes. The certificate also has no subjectAltName
   (CN only), which some clients reject (inferred).
 - **Workaround (inferred from the code):** on the login node delete `OOD_CERT` and `/etc/pki/tls/private/ood.key`,

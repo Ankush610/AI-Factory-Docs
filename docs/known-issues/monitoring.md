@@ -8,7 +8,7 @@ Issues in [`9-monitoring`](https://github.com/Ankush610/OOD-Install/tree/main/9-
 | [No notifications, and no watch on the watcher](#no-notifications-and-no-watch-on-the-watcher) | Gap | Confirmed |
 | [Probes are fixed for all six services](#probes-are-fixed-for-all-six-services) | Bug | Confirmed |
 | [GPU health can vanish silently on some drivers](#gpu-health-can-vanish-silently-on-some-drivers) | Bug | Inferred |
-| [Runbook links point to GitHub](#runbook-links-point-to-github) | Gap | Confirmed |
+| [Runbook links need internet access](#runbook-links-need-internet-access) | Gap | Confirmed |
 | [README leaves out blackbox_exporter](#readme-leaves-out-blackbox_exporter) | Docs | Confirmed |
 | ["Model Hub reads Prometheus" isn't true yet](#model-hub-reads-prometheus-isnt-true-yet) | Docs | Confirmed |
 | [Smaller items](#smaller-items) | Mixed | — |
@@ -37,11 +37,11 @@ Issues in [`9-monitoring`](https://github.com/Ankush610/OOD-Install/tree/main/9-
   health line (ECC, remap, slowdown) is lost, and errors go to `/dev/null`.
 - **Check:** `nvidia-smi --query-gpu=clocks_event_reasons.hw_slowdown --format=csv` on each GPU node.
 
-## Runbook links point to GitHub
+## Runbook links need internet access
 
 - **Type:** Gap · **Confidence:** Confirmed · **Where:** `site.conf:144`
-- **What happens:** `RUNBOOK_URL` points to the README on GitHub `main`. On an air-gapped site, or without access to
-  the repository, "How to fix" links are dead. The anchors must stay `#<alertname in lower case>`, and
+- **What happens:** `RUNBOOK_URL` points to this site's Monitoring reference on GitHub Pages. On an air-gapped
+  site "How to fix" links are dead (host a copy of the site locally and point `RUNBOOK_URL` at it). The anchors must stay `#<alertname in lower case>`, and
   `#alerts-what-to-do` is also linked.
 
 ## README leaves out blackbox_exporter

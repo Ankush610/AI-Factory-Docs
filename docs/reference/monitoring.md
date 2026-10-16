@@ -1,8 +1,7 @@
 # Monitoring reference
 
-Metrics, named queries and alerts provided by [9-monitoring](../admin/install/monitoring.md). For what to do when
-an alert fires, the Cluster monitor's **How to fix** links go to the runbook:
-[Alerts: what to do](https://github.com/Ankush610/OOD-Install/blob/main/9-monitoring/README.md#alerts-what-to-do).
+Metrics, named queries and alerts provided by [9-monitoring](../admin/install/monitoring.md). What to do when an
+alert fires is in [Alerts](#alerts): the Cluster monitor's **How to fix** links open its rows.
 
 ## Scrape jobs
 
@@ -79,7 +78,13 @@ Apps should query these names, not their own PromQL, so a measurement changes in
 curl -s "$PROM_URL/api/v1/query" --data-urlencode 'query=slurm:node_gpus_free'
 ```
 
+<a id="alerts-what-to-do"></a>
+
 ## Alerts
+
+Every alert, what it means and what to do. This is the runbook: the Cluster monitor's **How to fix** links open
+`RUNBOOK_URL#<alert name in lower case>` (each row has that anchor), and **Every alert and how to fix it** opens
+`#alerts-what-to-do`. Keep the anchors when editing.
 
 No email or paging yet: alerts show in the Cluster monitor and at `$PROM_URL/alerts`.
 
@@ -87,22 +92,22 @@ No email or paging yet: alerts show in the Cluster monitor and at `$PROM_URL/ale
 
 | Alert | Fires when | For | Severity | What to do |
 |---|---|---|---|---|
-| `TargetDown` | `up == 0` | 5m | critical | `ping`; `systemctl status node_exporter` on the node; rerun `1-install.sh` when it's back |
-| `ServiceDown` | a `MONITOR_UNITS` unit isn't active | 2m | critical | `systemctl status/start <unit>`, `journalctl -u <unit> -n 50`. LDAP or sssd down = nobody can log in |
-| `ServiceUnreachable` | a probe fails | 3m | critical | open the URL from master; check httpd, keycloak, `kubectl get pods -n mlflow` / `-n model-hub`, the registry, `dirsrv@*` |
-| `CertificateExpiresSoon` | 7–30 days left | 1h | warning | plan the renewal (see [known issues](../known-issues/install-and-docs.md#certificate-renewal-isnt-really-documented)) |
-| `CertificateExpiresVerySoon` | < 7 days left | 10m | critical | renew now |
-| `SlurmNodeUnavailable` | node down/drained/not responding | 10m | warning | `scontrol show node <n>`; fix; `scontrol update nodename=<n> state=resume` |
-| `CollectorFailing` | `gpu_collector_ok` or `slurm_collector_ok` is 0 | 5m | warning | `journalctl -u gpu-metrics` / `-u slurm-metrics`; `nvidia-smi` |
-| `CollectorStale` | a collector file is older than 120 s | 5m | warning | `systemctl list-timers gpu-metrics.timer slurm-metrics.timer` |
-| `GpuEccErrors` | uncorrectable ECC errors > 0 | 1m | critical | drain, wait for jobs, `nvidia-smi -r -i <gpu>`; replace the card if it recurs |
-| `GpuRemapPending` | a remap waits for a reset | 5m | warning | when idle: drain, reset, resume |
-| `GpuThrottled` | hardware slowdown | 10m | warning | `nvidia-smi -q -d PERFORMANCE,TEMPERATURE,POWER`; check airflow and power |
-| `GpuMissing` | Slurm has more GPUs than `nvidia-smi` sees | 10m | critical | `nvidia-smi`; `dmesg \| grep -i xid`; drain, reboot, reseat or replace |
-| `GpuHot` | GPU above 85 °C | 10m | warning | fans, room; `nvidia-smi -q -d TEMPERATURE` |
-| `PrometheusBadConfig` | a reload was rejected | 10m | critical | `promtool check config …`; fix and rerun `1-install.sh` |
-| `PrometheusRuleFailures` | a rule errors on every evaluation | 15m | critical | `journalctl -u prometheus \| grep 'Evaluating rule failed'` |
-| `PrometheusTSDBCompactionsFailing` | data blocks can't be merged | 4h | warning | `df -h /var/lib/prometheus`; journal |
+| <a id="targetdown"></a>`TargetDown` | `up == 0`: a node is off or unreachable, or its node_exporter (or blackbox_exporter) stopped | 5m | critical | `ping <node>`; `ssh <node> systemctl status node_exporter`. When it's back, rerun `1-install.sh` (it was skipped). Planned downtime: drain it in Slurm |
+| <a id="servicedown"></a>`ServiceDown` | a `MONITOR_UNITS` unit stopped or failed | 2m | critical | `ssh <node> systemctl status <unit>`; `journalctl -u <unit> -n 50`; `systemctl start <unit>`. LDAP (`dirsrv@*`) or sssd down = nobody can log in |
+| <a id="serviceunreachable"></a>`ServiceUnreachable` | a probe fails: the service doesn't answer the way a user calls it, even if systemd says active | 3m | critical | Open the URL in the alert from master. Portal/Keycloak: `systemctl status httpd keycloak`. MLflow/gateway: `kubectl get pods -n mlflow` / `-n model-hub`. Registry: `curl http://master:5000/v2/`, `podman ps`. LDAP: `systemctl status dirsrv@*` |
+| <a id="certificateexpiressoon"></a>`CertificateExpiresSoon` | a certificate (portal, LDAP, gateway) has 7–30 days left | 1h | warning | Plan the renewal. Rerunning the install scripts doesn't renew every certificate: see [known issues](../known-issues/install-and-docs.md#certificate-renewal-isnt-really-documented). Customer certificates: ask them for a new one |
+| <a id="certificateexpiresverysoon"></a>`CertificateExpiresVerySoon` | < 7 days left | 10m | critical | Renew now (as above). After it expires, browsers and `ldaps` clients refuse to connect |
+| <a id="slurmnodeunavailable"></a>`SlurmNodeUnavailable` | a Slurm node is down, drained or not responding: it takes no jobs | 10m | warning | `scontrol show node <node>` (see `Reason=`); fix it, then `scontrol update nodename=<node> state=resume` |
+| <a id="collectorfailing"></a>`CollectorFailing` | `gpu_collector_ok` or `slurm_collector_ok` is 0: nvidia-smi or scontrol/squeue fails | 5m | warning | `journalctl -u gpu-metrics -n 20` (GPU nodes) or `-u slurm-metrics` (master); `ssh <node> nvidia-smi` |
+| <a id="collectorstale"></a>`CollectorStale` | a collector file is older than 120 s (timer off or killed) | 5m | warning | `systemctl list-timers gpu-metrics.timer slurm-metrics.timer`; `systemctl start <name>.timer` |
+| <a id="gpueccerrors"></a>`GpuEccErrors` | uncorrectable ECC errors > 0: jobs on the GPU can crash or compute garbage | 1m | critical | Drain the node (`scontrol update nodename=<node> state=drain reason=ecc`), wait for jobs, `nvidia-smi -r -i <gpu>`. Again after a reset = replace the card |
+| <a id="gpuremappending"></a>`GpuRemapPending` | a bad memory row is replaced at the next GPU reset | 5m | warning | When the GPU is idle: drain, `nvidia-smi -r -i <gpu>`, resume. Not urgent |
+| <a id="gputhrottled"></a>`GpuThrottled` | hardware slowed the GPU down (power brake or heat) | 10m | warning | `nvidia-smi -q -d PERFORMANCE,TEMPERATURE,POWER` on the node; check airflow, PSU, power cables |
+| <a id="gpumissing"></a>`GpuMissing` | Slurm has more GPUs on a node than `nvidia-smi` sees: a card fell off the bus | 10m | critical | `nvidia-smi`; `dmesg \| grep -i xid`; drain and reboot the node; still missing = reseat or replace the card |
+| <a id="gpuhot"></a>`GpuHot` | GPU above 85 °C | 10m | warning | Check fans and room cooling; `nvidia-smi -q -d TEMPERATURE` |
+| <a id="prometheusbadconfig"></a>`PrometheusBadConfig` | a reload was rejected: Prometheus still runs the old config | 10m | critical | `promtool check config /etc/prometheus/prometheus.yml`; `journalctl -u prometheus -n 50`; fix and rerun `1-install.sh` |
+| <a id="prometheusrulefailures"></a>`PrometheusRuleFailures` | a rule errors on every evaluation: its alert can't fire | 15m | critical | `journalctl -u prometheus \| grep 'Evaluating rule failed'` shows the rule and error; fix it in `rules.yml`, add a case to `rules_test.yml` |
+| <a id="prometheustsdbcompactionsfailing"></a>`PrometheusTSDBCompactionsFailing` | data blocks can't be merged | 4h | warning | Disk space under `PROM_DATA` (`df -h /var/lib/prometheus`); `journalctl -u prometheus -n 50` |
 
 ### Node alerts (`node-alerts.yml`, node-mixin 1.12.1)
 
@@ -110,22 +115,24 @@ Filesystems are limited to local `ext4|xfs|btrfs`.
 
 | Alert | Fires when | Severity | What to do |
 |---|---|---|---|
-| `NodeFilesystemSpaceFillingUp` | < 40 % free and full within 24 h / < 20 % and within 4 h | warning / critical | `du -xh --max-depth=2 <mount> \| sort -h \| tail` |
-| `NodeFilesystemAlmostOutOfSpace` | < 5 % / < 3 % free | warning / critical | same |
-| `NodeFilesystemFilesFillingUp` | inodes running out within 24 h / 4 h | warning / critical | find folders with many files |
-| `NodeFilesystemAlmostOutOfFiles` | < 5 % / < 3 % inodes free | warning / critical | same |
-| `NodeNetworkReceiveErrs`, `NodeNetworkTransmitErrs` | > 1 % errors | warning | `ip -s link show <dev>`; cable, port, NIC |
-| `NodeHighNumberConntrackEntriesUsed` | conntrack > 75 % | warning | raise `nf_conntrack_max` or find the source |
-| `NodeTextFileCollectorScrapeError` | node_exporter can't read a `.prom` file | warning | `ls -l /var/lib/node_exporter/textfile/` |
-| `NodeClockSkewDetected`, `NodeClockNotSynchronising` | clock off / NTP not syncing | warning | `chronyc tracking`, `chronyc sources`. Munge and TLS break with bad clocks |
-| `NodeRAIDDegraded` | RAID lost a disk | critical | `cat /proc/mdstat`; `mdadm --detail`; replace now |
-| `NodeRAIDDiskFailure` | a RAID member failed | warning | same |
-| `NodeFileDescriptorLimit` | fd table > 70 % / > 90 % | warning / critical | `cat /proc/sys/fs/file-nr` |
-| `NodeMemoryMajorPagesFaults` | heavy paging | warning | `vmstat 1`; `squeue -w <node>` |
-| `NodeMemoryHighUtilization` | RAM > 90 % | warning | `squeue -w <node>`; a job without `--mem`? |
-| `NodeDiskIOSaturation` | disk queue high | warning | `iostat -x 1`; NFS load on master |
-| `NodeSystemdServiceCrashlooping` | a unit keeps restarting | warning | `systemctl status`, `journalctl -u <unit> -n 100` |
-| `NodeBondingDegraded` | a bond lost a member | warning | `cat /proc/net/bonding/<bond>` |
+| <a id="nodefilesystemspacefillingup"></a>`NodeFilesystemSpaceFillingUp` | < 40 % free and full within 24 h / < 20 % and within 4 h | warning / critical | `du -xh --max-depth=2 <mount> \| sort -h \| tail`; on `/home` look for big user folders, old SIFs, `/home/apps/registry` |
+| <a id="nodefilesystemalmostoutofspace"></a>`NodeFilesystemAlmostOutOfSpace` | < 5 % / < 3 % free | warning / critical | Same as above, now |
+| <a id="nodefilesystemfilesfillingup"></a>`NodeFilesystemFilesFillingUp` | inodes (number of files) running out within 24 h / 4 h | warning / critical | `find <mount> -xdev -type f \| cut -d/ -f1-4 \| sort \| uniq -c \| sort -n \| tail` (millions of small files: datasets, caches) |
+| <a id="nodefilesystemalmostoutoffiles"></a>`NodeFilesystemAlmostOutOfFiles` | < 5 % / < 3 % inodes free | warning / critical | Same as above, now |
+| <a id="nodenetworkreceiveerrs"></a>`NodeNetworkReceiveErrs` | > 1 % receive errors on an interface | warning | `ip -s link show <dev>`; cable, switch port, NIC |
+| <a id="nodenetworktransmiterrs"></a>`NodeNetworkTransmitErrs` | > 1 % transmit errors on an interface | warning | Same as above |
+| <a id="nodehighnumberconntrackentriesused"></a>`NodeHighNumberConntrackEntriesUsed` | connection-tracking table > 75 % full (k8s nodes) | warning | `sysctl net.netfilter.nf_conntrack_max`; raise it, or find who opens so many connections |
+| <a id="nodetextfilecollectorscrapeerror"></a>`NodeTextFileCollectorScrapeError` | node_exporter can't read a `.prom` file | warning | `ls -l /var/lib/node_exporter/textfile/`; `curl -s localhost:9100/metrics \| grep textfile` |
+| <a id="nodeclockskewdetected"></a>`NodeClockSkewDetected` | clock off by more than 0.05 s | warning | `chronyc tracking`; `systemctl status chronyd`. Munge (Slurm) and TLS break with bad clocks |
+| <a id="nodeclocknotsynchronising"></a>`NodeClockNotSynchronising` | clock not syncing at all | warning | `chronyc sources`; is the NTP server reachable? |
+| <a id="noderaiddegraded"></a>`NodeRAIDDegraded` | a RAID array lost a disk | critical | `cat /proc/mdstat`; `mdadm --detail /dev/<device>`; replace the disk now: one more failure = data loss |
+| <a id="noderaiddiskfailure"></a>`NodeRAIDDiskFailure` | a disk in a RAID array failed | warning | Same as above |
+| <a id="nodefiledescriptorlimit"></a>`NodeFileDescriptorLimit` | the kernel's open-file table > 70 % / > 90 % used | warning / critical | `cat /proc/sys/fs/file-nr`; `lsof \| awk '{print $1}' \| sort \| uniq -c \| sort -n \| tail` |
+| <a id="nodememorymajorpagesfaults"></a>`NodeMemoryMajorPagesFaults` | heavy swapping / page-ins: the node crawls | warning | `vmstat 1`; which job: `squeue -w <node>`, `top -o RES` |
+| <a id="nodememoryhighutilization"></a>`NodeMemoryHighUtilization` | RAM > 90 % for 15 min | warning | `squeue -w <node>`, `top -o RES`; a job without a memory limit (Slurm `--mem`)? |
+| <a id="nodediskiosaturation"></a>`NodeDiskIOSaturation` | disk I/O queue high for 30 min | warning | `iostat -x 1`; on master: NFS load from many jobs at once |
+| <a id="nodesystemdservicecrashlooping"></a>`NodeSystemdServiceCrashlooping` | a systemd unit keeps restarting | warning | `systemctl status <unit>`; `journalctl -u <unit> -n 100` |
+| <a id="nodebondingdegraded"></a>`NodeBondingDegraded` | a bonded network link lost a member | warning | `cat /proc/net/bonding/<bond>`; cable, switch port |
 
 Dropped on purpose: `NodeCPUHighUsage` and `NodeSystemSaturation` (100 % CPU is the point of HPC) and
 `NodeSystemdServiceFailed` (`ServiceDown` covers it).

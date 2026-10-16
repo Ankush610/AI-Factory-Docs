@@ -27,8 +27,8 @@ Issues in [`1-ldap`](https://github.com/Ankush610/OOD-Install/tree/main/1-ldap).
 
 ## Rerunning `1-server.sh` doesn't renew the certificate
 
-- **Type:** Docs · **Confidence:** Confirmed · **Where:** `1-ldap/1-server.sh:27-28`; `9-monitoring/README.md:122`
-- **What happens:** the monitoring runbook says to renew the LDAP certificate by rerunning `1-server.sh`. That script
+- **Type:** Docs · **Confidence:** Confirmed · **Where:** `1-ldap/1-server.sh:27-28`
+- **What happens:** rerunning `1-server.sh` doesn't renew the LDAP certificate. That script
   skips an existing instance and only copies the CA again, so nothing is renewed. The certificate's lifetime is not
   set in the code either.
 - **Workaround:** none documented. Renew the certificate with 389 DS's own tools (`dsctl`/`certutil`) and copy the

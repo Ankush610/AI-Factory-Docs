@@ -165,7 +165,7 @@ script hardcodes a hostname, IP, base DN, port or path.
 | `PROM_URL` | `http://$MASTER_IP:$PROM_PORT` | What the portal apps call (read-only `/api/v1/query`) | 9 |
 | `PROM_RETENTION` | `30d` | History kept this long… | 9 |
 | `PROM_RETENTION_SIZE` | `20GB` | …or until it reaches this size, whichever comes first | 9 |
-| `RUNBOOK_URL` | the 9-monitoring README on GitHub | "How to fix" links go to `RUNBOOK_URL#<alertname in lower case>` | 9 |
+| `RUNBOOK_URL` | this site's [Monitoring reference](monitoring.md#alerts) | "How to fix" links go to `RUNBOOK_URL#<alertname in lower case>` | 9 |
 | `BLACKBOX_PORT` | `9115` | blackbox_exporter, 127.0.0.1 on master only | 9 |
 | `NODE_EXPORTER_PORT` | `9100` | On every node. firewalld lets in only `MASTER_IP` | 9 |
 | `MONITOR_UNITS` | `slurmctld\|slurmd\|…\|nfs-server` | Regex of systemd unit names (no `.service`) watched by the `ServiceDown` alert. Each node watches the ones it has enabled | 9 |
