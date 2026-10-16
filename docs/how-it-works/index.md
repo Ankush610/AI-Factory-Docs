@@ -72,12 +72,12 @@ flowchart TB
   sees, what the admin does, and limits.
 - These pages explain *how it works*. The exact steps are in the [Admin guide](../admin/index.md) (one install page
   per component), the settings and ports in the [Reference](../reference/index.md), and the bugs and gaps found in
-  the code in [Known issues](../known-issues/index.md). The design decisions are in `AI-Stack/docs/`.
+  the code in [Known issues](../known-issues/index.md). The design decisions, build plans and build logs are in `OOD-Install/project/`.
 
 ## Where the code lives
 
 | Folder | What is in it |
 |---|---|
 | `OOD-Install/` | the install scripts, one numbered folder per component. One settings file, `site.conf`, holds every site value |
-| `AI-Stack/docs/` | the design documents: architecture, Model Hub design, build plans, and logs of problems and fixes |
+| `OOD-Install/project/` | the design documents: Model Hub design, build plans per version, and logs of problems and fixes |
 | `/home/apps/containers/` (on the cluster) | the training and serving container images |

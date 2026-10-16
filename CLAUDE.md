@@ -12,6 +12,10 @@ Hub + gateway, Keycloak, the Admin page and monitoring, on a Slurm + Kubernetes 
 **OOD-Install's code is the source of truth.** These pages describe what the code does. When the two disagree, the
 code wins: fix the page, or record the mismatch under Known issues.
 
+This site is the main reference for how the platform works: read it first, then the code. Plans, build logs and
+the Model Hub design are private, in OOD-Install's `project/` folder (was the AI-Stack repo, now deleted): use them
+for background, but never copy IPs, hostnames or secrets from them into these pages.
+
 ## Commands
 
 ```bash

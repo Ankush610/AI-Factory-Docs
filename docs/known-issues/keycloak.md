@@ -75,4 +75,4 @@ Issues in [`6-keycloak`](https://github.com/Ankush610/OOD-Install/tree/main/6-ke
   guards against Postgres ending up on NFS.
 - **LDAP password in the database** (Security, Inferred): the LDAP account's password is stored in Keycloak's
   database, so every `pg_dump` contains it.
-- **Design link** (Docs, Confirmed): the README links to the sibling `AI-Stack` repo, which most readers don't have.
+- **Design link** (Docs, Confirmed): the README links to `OOD-Install/project/`, which is private: most readers can't open it.
