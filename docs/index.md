@@ -40,6 +40,22 @@ It is built for **Rudra**, a single-rack AI system. Every Rudra gets the same so
 
     [:octicons-arrow-right-24: How it works](how-it-works/index.md)
 
+-   :material-file-table: **I need to look something up**
+
+    ---
+
+    Every setting, script, port, path, admin action and alert.
+
+    [:octicons-arrow-right-24: Reference](reference/index.md)
+
+-   :material-bug: **What's broken or missing?**
+
+    ---
+
+    Bugs, security gaps and doc mismatches found in the install scripts, with workarounds.
+
+    [:octicons-arrow-right-24: Known issues](known-issues/index.md)
+
 -   :material-book-alphabet: **What does that word mean?**
 
     ---

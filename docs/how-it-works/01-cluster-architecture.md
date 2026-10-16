@@ -106,10 +106,14 @@ run on any node, as that user, and see exactly the same files.
 | 22 | SSH (the login node → master: only the admin page's restricted key) | all |
 | 389 / 636 | LDAP | master |
 | 2049 | NFS (shared /home) | storage |
-| 6817–6820 | Slurm | master and nodes |
+| 6817–6819 | Slurm | master and nodes |
 | 6443 | Kubernetes API | master |
 | 5000 | image registry (inside the cluster only) | master |
 | 30500 | MLflow (jobs use it inside the cluster) | master |
+| 9090 | Prometheus (only from the login node) | master |
+| 9100 | node_exporter (only from master) | all |
+
+The full list, with the firewall rules the scripts add: [Ports and firewall](../reference/ports-and-firewall.md).
 
 Users from outside the rack need only **two addresses**: the portal (443) and the gateway (443).
 

@@ -39,13 +39,16 @@ flowchart TB
   person's home folder is kept, the next new person can never end up owning it.
 
 **Keycloak (the login page)**
-- Runs on the login node, next to the portal. It is reached only through the portal's own HTTPS address
-  (`https://<portal>/auth`), never directly.
+- Runs on **master**, next to LDAP (the user scripts call it, and only master holds its admin password). Browsers
+  reach it only through the portal's own HTTPS address (`https://<portal>/auth`): the portal's Apache passes it on,
+  and master's firewall lets only the login node in.
 - It **reads** users from LDAP and **asks LDAP** to check each password. LDAP stays the only user list.
   Nothing is copied or kept in two places.
 - It may **write one thing** to LDAP: a password, when a user chooses a new one in the browser. For this it has its
   own LDAP account that may change passwords and nothing else, and it talks to LDAP encrypted (ldaps, port 636).
-- It uses the standard OpenID Connect protocol. The portal, MLflow and Model Hub trust its answer.
+- It uses the standard OpenID Connect protocol, with **one client: the portal**. MLflow and Model Hub don't talk to
+  Keycloak themselves; they are opened through the portal, which is already logged in.
+- No self-registration, no "forgot password" (the admin resets it), and brute-force protection is on.
 - It runs as two containers (Keycloak + its Postgres database) under systemd, **not** in Kubernetes. So login
   still works if Kubernetes has a problem.
 - Web sessions last 8 hours, then Keycloak asks again.
@@ -89,12 +92,17 @@ sequenceDiagram
 - An admin can make **teams** in LDAP (for example `nlp`) and add people to them.
 - Teams are only used for **sharing models** in Model Hub. They give no file rights.
 
+**The login switch.** The portal's login mode is one setting, `OOD_AUTH`: `keycloak` (the login page above) or
+`ldap` (the browser's own password box, checked against LDAP). Installing Keycloak changes nothing until the
+setting is switched, and switching back is always possible. See [Install → Keycloak](../admin/install/keycloak.md).
+
 **Two kinds of accounts**
 
 | Kind | User IDs | In LDAP? | Examples |
 |---|---|---|---|
 | People | 1000 and up | yes | alice, bob |
 | Service accounts | below 1000 | no, local on master | `mlflow` (950), `modelhub` (951), `keycloak` (949) |
+| The local admin | local | no, local on every node | `admin` (`OOD_ADMIN`): the way back in if LDAP or Keycloak breaks |
 
 Service accounts sit below 1000, so they can never clash with a real person.
 
@@ -131,3 +139,5 @@ Service accounts sit below 1000, so they can never clash with a real person.
 - Rudra brings **its own** LDAP. Connecting to a customer's Active Directory is not part of this version.
 
 Details: [OOD-Install/1-ldap/README.md](https://github.com/Ankush610/OOD-Install/blob/main/1-ldap/README.md), [OOD-Install/6-keycloak/README.md](https://github.com/Ankush610/OOD-Install/blob/main/6-keycloak/README.md).
+
+Install and run it: [LDAP](../admin/install/ldap.md), [Keycloak](../admin/install/keycloak.md). Bugs and gaps: [Known issues → LDAP](../known-issues/ldap.md), [Keycloak](../known-issues/keycloak.md).

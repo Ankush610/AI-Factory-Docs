@@ -55,6 +55,17 @@ nav:
       - Problems and fixes: user/faq.md
   - Admin guide:
       - Install: admin/index.md
+      - Install by component:
+          - 0 · Registry: admin/install/registry.md
+          - 1 · Users (LDAP): admin/install/ldap.md
+          - 2 · Web portal: admin/install/portal.md
+          - 3 · MLflow: admin/install/mlflow.md
+          - 4 · VS Code: admin/install/vscode.md
+          - 5 · Model Hub + gateway: admin/install/model-hub.md
+          - 6 · Keycloak: admin/install/keycloak.md
+          - 7 · Jupyter: admin/install/jupyter.md
+          - 8 · Admin page: admin/install/admin-page.md
+          - 9 · Monitoring: admin/install/monitoring.md
       - Everyday tasks: admin/daily.md
       - Cluster monitor: admin/cluster-monitor.md
       - Alerts runbook: https://github.com/Ankush610/OOD-Install/blob/main/9-monitoring/README.md#alerts-what-to-do
@@ -72,4 +83,27 @@ nav:
       - Model Hub: how-it-works/09-model-hub.md
       - Gateway and API keys: how-it-works/10-gateway-and-api-keys.md
       - Security and isolation: how-it-works/11-security-and-isolation.md
+      - Monitoring: how-it-works/12-monitoring.md
+  - Reference:
+      - reference/index.md
+      - site.conf: reference/site-conf.md
+      - Scripts: reference/scripts.md
+      - Ports and firewall: reference/ports-and-firewall.md
+      - Files, accounts and secrets: reference/files-and-accounts.md
+      - Admin helper: reference/admin-actions.md
+      - Monitoring: reference/monitoring.md
+  - Known issues:
+      - known-issues/index.md
+      - Install and docs: known-issues/install-and-docs.md
+      - Security: known-issues/security.md
+      - Registry: known-issues/registry.md
+      - LDAP: known-issues/ldap.md
+      - Portal: known-issues/portal.md
+      - MLflow: known-issues/mlflow.md
+      - VS Code: known-issues/vscode.md
+      - Model Hub: known-issues/model-hub.md
+      - Keycloak: known-issues/keycloak.md
+      - Jupyter: known-issues/jupyter.md
+      - Admin page: known-issues/admin-page.md
+      - Monitoring: known-issues/monitoring.md
   - Glossary: glossary.md

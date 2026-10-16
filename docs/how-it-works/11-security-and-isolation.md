@@ -102,3 +102,5 @@ The Admin page can add and remove people, so it is locked down more than the oth
 | Login node → Keycloak over plain HTTP | with separate login and master machines, the login form (passwords) and tokens cross the rack network unencrypted | acceptable on a private rack; else give Keycloak its own certificate |
 
 See also: [03 Users and login](03-users-and-login.md), [09 Model Hub](09-model-hub.md), [10 Gateway](10-gateway-and-api-keys.md).
+
+Every security finding from the code review, in one list: [Known issues → Security](../known-issues/security.md).

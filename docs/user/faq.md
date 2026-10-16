@@ -12,9 +12,12 @@
 | "Stopped by the admin on …" | the admin stopped it, usually to free a GPU | remove the card; start again when needed |
 | My model stays in **Waiting** | all GPUs are busy with training, which comes first | the page shows your place in the queue. Or deploy on CPU |
 | My model doesn't show in Model Hub | it isn't registered in MLflow | register it ([Track runs](tracking.md)); for an LLM, run `model-register` |
-| Gateway answers 401 | key missing or wrong, or brand new | check `MH_KEY`; a new key works within a minute |
+| Gateway answers 401 | key missing or wrong, or brand new | check `MH_KEY`; a new key works within a few seconds |
 | Gateway answers 403 | wrong address, or the endpoint isn't shared with you | check the owner and endpoint name; ask the owner to share it |
 | Gateway answers 502 / 504 | the model is stopped, loading or waiting | check its state in **My endpoints** |
 | `curl`: certificate problem | the gateway uses the site's own certificate | download `gateway-ca.crt` from the **API** tab and use `--cacert gateway-ca.crt` |
+| Jupyter notebook stays "Connecting…" | you opened the portal by a different address than the official one | open the portal by its official address |
+| Jupyter `torch.cuda.is_available()` is False | a "Notebook only" session, or a non-container kernel | start a **GPU node** session and pick a `(container)` kernel |
+| There is a number on the bell in the top bar | the admin stopped one of your sessions, jobs or endpoints | open the bell to read why; ✕ clears it |
 | A VS Code extension can't be found | extensions come from Open VSX, not Microsoft's store | look for an Open VSX alternative |
 | Something else | | ask your admin. Tell them what you did, what you saw, and the job number or endpoint name |

@@ -31,7 +31,7 @@ sequenceDiagram
     C->>NG: HTTPS + "Authorization: Bearer mh~bob~…"<br/>/alice/churn/invocations
     NG->>AU: may this key call alice/churn?
     AU->>K: Bob's key hash, alice/churn's sharing rules,<br/>Bob's teams
-    K-->>AU: answers (cached ~1 minute)
+    K-->>AU: answers (cached 5 seconds)
     AU-->>NG: yes (adds the model's internal key if it's an LLM)
     NG->>M: forward the call
     M-->>C: answer (streamed word by word for LLMs)
@@ -49,7 +49,7 @@ sequenceDiagram
 **Personal API key**
 - Made on Model Hub's **API key** page. It looks like `mh~alice~<48 random characters>`. It is **shown once**.
 - Only a **hash** of it is stored (in the user's own namespace). Nobody can read the key back, not even the admin.
-- Making a new key kills the old one within about a minute.
+- Making a new key kills the old one within a few seconds (the gateway caches answers for 5 s).
 - One key works for every model the person may call: their own, and those shared with them.
 - An LLM endpoint has its own internal key too. The gateway adds it, so users never see or handle it.
 
@@ -90,7 +90,7 @@ For LLMs, any OpenAI client works with `base_url = https://<gateway>/alice/qwen-
 | Code | Means |
 |---|---|
 | 200 | OK |
-| 401 | missing, wrong or old key (a new key needs up to a minute) |
+| 401 | missing, wrong or old key (a new key needs a few seconds) |
 | 403 | no such endpoint, **or** it is not shared with you (the same answer on purpose, so names can't be guessed) |
 | 502 / 504 | the model is stopped, still loading, or waiting for a GPU |
 
@@ -115,3 +115,5 @@ For LLMs, any OpenAI client works with `base_url = https://<gateway>/alice/qwen-
 - Usage logging (who called what) is planned. Reports come later.
 
 Details: [OOD-Install/5-model-hub/README.md](https://github.com/Ankush610/OOD-Install/blob/main/5-model-hub/README.md) (section "Gateway").
+
+Install and run it: [Model Hub and gateway](../admin/install/model-hub.md#8-the-gateway-master). Bugs and gaps: [Known issues → Model Hub](../known-issues/model-hub.md).

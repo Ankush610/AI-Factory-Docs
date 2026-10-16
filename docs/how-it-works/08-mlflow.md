@@ -87,3 +87,5 @@ flowchart LR
 - A "permission denied" error may also mean "this does not exist". MLflow answers the same way for both.
 
 Details: [OOD-Install/3-mlflow/README.md](https://github.com/Ankush610/OOD-Install/blob/main/3-mlflow/README.md), [OOD-Install/3-mlflow/WORKFLOW.md](https://github.com/Ankush610/OOD-Install/blob/main/3-mlflow/WORKFLOW.md).
+
+Install and run it: [MLflow](../admin/install/mlflow.md). Bugs and gaps: [Known issues → MLflow](../known-issues/mlflow.md).

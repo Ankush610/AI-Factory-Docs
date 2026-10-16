@@ -11,8 +11,11 @@ Each session runs **on the cluster, as you**, next to your files and the GPUs. N
 
 1. **Interactive Apps → VS Code** (or **Jupyter**).
 2. Pick where it runs (see below) and how many hours.
-3. Click **Launch**. After a few seconds the card shows **Running**.
-4. Click **Connect**. The editor or notebook opens in a new tab.
+3. Click **Launch**. The card shows **Waiting** (in the queue), then **Starting**, then **Ready**, usually within seconds.
+4. When it says **Ready**, click **Connect**. The editor or notebook opens in a new tab.
+
+Sessions last 1 to 12 hours (4 by default). They are not listed under the portal's "My Interactive Sessions";
+the VS Code or Jupyter page lists them.
 
 | Choice | Runs on | You get | Use it for |
 |---|---|---|---|
@@ -39,7 +42,8 @@ python -m ipykernel install --user --name my-env
 
 - When its hours run out.
 - After **1 hour with no browser attached** (and, in Jupyter, no cell running). This frees memory and GPUs for others.
-- When the admin stops it. The page then shows **"Stopped by the admin on &lt;time&gt;"**. Remove that card with its bin button.
+- When the admin stops it. The page then shows **"Stopped by the admin on &lt;time&gt;"**; the envelope icon shows the
+  admin's reason, and the portal's bell lists it too. Remove that card with its bin button.
 
 Your files are not lost when a session ends. Only the running programs stop.
 
@@ -48,6 +52,7 @@ Your files are not lost when a session ends. Only the running programs stop.
 ## VS Code extensions
 
 Extensions come from **Open VSX**, not Microsoft's store. Python, Jupyter, GitLens and most others are there.
-A few Microsoft-only ones (Pylance, Copilot, Remote-SSH) are not.
+A few Microsoft-only ones (Pylance, Copilot, Remote-SSH) are not. You can install a `.vsix` file instead:
+**Extensions → … → Install from VSIX**.
 
 Your settings and extensions are kept in your home folder, so they are there next time.

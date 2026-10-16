@@ -95,3 +95,5 @@ flowchart LR
 - Deleting images from the registry is a manual, two-step job (delete, then clean up the disk).
 
 Details: [OOD-Container/README.md](https://github.com/Ankush610/OOD-Container/blob/main/README.md), [OOD-Install/0-registry/README.md](https://github.com/Ankush610/OOD-Install/blob/main/0-registry/README.md).
+
+Install and run it: [Registry](../admin/install/registry.md). Bugs and gaps: [Known issues → Registry](../known-issues/registry.md).

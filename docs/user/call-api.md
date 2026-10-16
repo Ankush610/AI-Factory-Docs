@@ -18,7 +18,7 @@ https://<gateway>/<owner>/<endpoint>/<path>
     ```
 
 One key works for every model you may call: yours, and those shared with you. Lost it, or it leaked? Make a
-new one. The old key stops working within about a minute.
+new one. The old key stops working within a few seconds.
 
 ## 2. Get the certificate (if Model Hub offers it)
 
@@ -88,7 +88,7 @@ On your endpoint, click **Share** and pick who may call it:
 | Code | Means | Do |
 |---|---|---|
 | 200 | OK | |
-| 401 | missing, wrong or old key | check `MH_KEY`. A new key needs up to a minute to work |
+| 401 | missing, wrong or old key | check `MH_KEY`. A new key needs a few seconds to work |
 | 403 | no such endpoint, **or** it isn't shared with you | check the address; ask the owner to share it |
 | 502 / 504 | the model is stopped, still loading, or waiting for a GPU | look at its state in **My endpoints** |
 

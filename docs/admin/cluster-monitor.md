@@ -49,4 +49,6 @@ Every alert, what it means and what to do, is in one table:
 [Alerts: what to do](https://github.com/Ankush610/OOD-Install/blob/main/9-monitoring/README.md#alerts-what-to-do).
 The Cluster monitor's **How to fix** links go there. Change where they point with `RUNBOOK_URL` in `site.conf`.
 
-Email alerts are planned, not built yet.
+Every metric, named query and alert is listed in the [Monitoring reference](../reference/monitoring.md).
+
+Email alerts are planned, not built yet ([known issue](../known-issues/monitoring.md#no-notifications-and-no-watch-on-the-watcher)).

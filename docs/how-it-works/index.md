@@ -59,7 +59,8 @@ flowchart TB
 | MLflow | record every training run, keep the trained models | [08](08-mlflow.md) |
 | Model Hub | turn a trained model into a running API | [09](09-model-hub.md) |
 | Gateway | the one secure address to call models, with a personal key | [10](10-gateway-and-api-keys.md) |
-| Admin page | for the customer's admin: see and stop what runs, add and remove people, teams, limits | [Admin guide](../admin/index.md) |
+| Monitoring | one Prometheus: nodes, GPUs, services, alerts; the admin's Cluster monitor | [12](12-monitoring.md) |
+| Admin page | for the customer's admin: see and stop what runs, add and remove people, teams, limits | [11](11-security-and-isolation.md#the-admin-page), [Admin guide](../admin/index.md) |
 
 ---
 
@@ -69,8 +70,9 @@ flowchart TB
   note says **(test cluster: …)**.
 - Every component page has the same parts: what it is, why we need it, a diagram, how it works, what the user
   sees, what the admin does, and limits.
-- These pages explain *how it works*. The exact commands are in the install scripts' own READMEs
-  ([OOD-Install/<folder>/README.md](https://github.com/Ankush610/OOD-Install/blob/main/<folder>/README.md)). The design decisions are in `AI-Stack/docs/`.
+- These pages explain *how it works*. The exact steps are in the [Admin guide](../admin/index.md) (one install page
+  per component), the settings and ports in the [Reference](../reference/index.md), and the bugs and gaps found in
+  the code in [Known issues](../known-issues/index.md). The design decisions are in `AI-Stack/docs/`.
 
 ## Where the code lives
 

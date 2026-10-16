@@ -83,3 +83,5 @@ type their address.
 - In `ldap` login mode, a browser keeps one login per site until it is fully closed. Keycloak mode fixes this.
 
 Details: [OOD-Install/2-ood/README.md](https://github.com/Ankush610/OOD-Install/blob/main/2-ood/README.md).
+
+Install and run it: [Portal](../admin/install/portal.md). Bugs and gaps: [Known issues → Portal](../known-issues/portal.md).

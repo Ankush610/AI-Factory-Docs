@@ -29,7 +29,7 @@ sequenceDiagram
     S->>N: start job.sh
     N->>N: pick a free port, make a one-time password/token,<br/>start code-server or JupyterLab
     N-->>P: write a session file in the user's home (mode 600)
-    P-->>U: card shows "Running" + Connect
+    P-->>U: card shows "Ready" + Connect
     U->>PX: Connect
     PX->>N: forward to node:port (with the one-time password)
     N-->>U: editor / notebook in the browser
@@ -85,3 +85,5 @@ sequenceDiagram
   Remote-SSH) are not available. Python, Jupyter, GitLens and most others are.
 
 Details: [OOD-Install/4-vscode/README.md](https://github.com/Ankush610/OOD-Install/blob/main/4-vscode/README.md), [OOD-Install/7-jupyter/README.md](https://github.com/Ankush610/OOD-Install/blob/main/7-jupyter/README.md).
+
+Install and run it: [VS Code](../admin/install/vscode.md), [Jupyter](../admin/install/jupyter.md). Bugs and gaps: [Known issues → VS Code](../known-issues/vscode.md), [Jupyter](../known-issues/jupyter.md).

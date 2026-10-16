@@ -115,3 +115,5 @@ stateDiagram-v2
 - Not tested yet: a full LLM run through the browser, and a real 2-GPU model (needs H100 nodes).
 
 Details: [OOD-Install/5-model-hub/README.md](https://github.com/Ankush610/OOD-Install/blob/main/5-model-hub/README.md), design: `AI-Stack/docs/model-hub/`.
+
+Install and run it: [Model Hub](../admin/install/model-hub.md). Bugs and gaps: [Known issues → Model Hub](../known-issues/model-hub.md).
